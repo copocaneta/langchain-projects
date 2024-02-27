@@ -9,12 +9,19 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from htmlTemplates import css, bot_template, user_template
 
+
+# try to obtain the text from the pdf
+# if the pdf is not readable, return an empty string
+
 def get_pdf_text(pdf_docs):
     text = ""
     for pdf in pdf_docs:
         pdf_reader = PdfReader(pdf)
         for page in pdf_reader.pages:
-            text += page.extract_text()
+            try:
+                text += page.extract_text()
+            except:
+                text += ""
     return text
 
 
